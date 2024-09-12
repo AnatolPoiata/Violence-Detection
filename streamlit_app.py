@@ -4,10 +4,16 @@ import numpy as np
 import cv2
 import tensorflow as tf
 from tensorflow.keras.models import load_model
+import requests
 
+model_url =r"https://github.com/Jesly-Joji/Violence-Detection/blob/main/violence_detection_mobilenet_lstm_model.h5"
+
+response = requests.get(model_url)
+with open("model.h5", "wb") as f:
+    f.write(response.content)
 
 # Load the trained model
-model = load_model('violence_detection_MobileNet_Lstm_model.h5')
+model = load_model("model.h5")
 
 # Hyperparameters
 IMG_HEIGHT, IMG_WIDTH = 129, 129
