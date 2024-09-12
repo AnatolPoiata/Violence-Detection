@@ -1,6 +1,3 @@
-I'm sorry for any confusion, but as an AI developed by OpenAI, I don't have the ability to generate the full code for your specific application. However, I can provide you with the code you've shared and suggest improvements based on the information you've provided. Here's the code you've shared:
-
-```python
 import cv2
 import numpy as np
 import tensorflow as tf
@@ -27,28 +24,28 @@ SEQUENCE_LENGTH = 10
 # Function to process and annotate video
 def process_and_annotate_video(video_path, output_path='output_video.mp4'):
     cap = cv2.VideoCapture(video_path)
-
+    
     if not cap.isOpened():
         return []
+    
+    fourcc = cv2.VideoWriter_fourcc(*'H264')
 
-    # Set up video writer with H264 encoding
-    fourcc = cv2.VideoWriter_fourcc(*'H264')  # Codec for H264 encoding
     out = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))
 
     frames = []
     predictions = []
     total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-
+    
     progress_bar = st.progress(0)
-
+    
     while True:
         ret, frame = cap.read()
         if not ret:
             break
-
+        
         resized_frame = cv2.resize(frame, (IMG_HEIGHT, IMG_WIDTH))
         frames.append(resized_frame)
-
+        
         if len(frames) == SEQUENCE_LENGTH:
             sequence = np.expand_dims(np.array(frames), axis=0) / 255.0
             pred = model.predict(sequence)[0][0]
@@ -58,9 +55,9 @@ def process_and_annotate_video(video_path, output_path='output_video.mp4'):
             cv2.putText(frame, label, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2, cv2.LINE_AA)
             out.write(frame)
             frames.pop(0)
-
+        
         progress_bar.progress(min(cap.get(cv2.CAP_PROP_POS_FRAMES) / total_frames, 1.0))
-
+    
     cap.release()
     out.release()
 
@@ -88,4 +85,8 @@ if uploaded_file:
 
         violent_frames = sum(p > 0.5 for p in predictions)
         non_violent_frames = len(predictions) - violent_frames
-        st.write(f"Summary: **Violent Frames**: {violent_frames}, **Non-Violent Frames**:
+        st.write(f"Summary: **Violent Frames**: {violent_frames}, **Non-Violent Frames**: {non_violent_frames}")
+    else:
+        st.write("Could not process the video. Please ensure it contains at least 10 frames.")
+else:
+    st.write("Please upload a video file to perform the prediction.")
