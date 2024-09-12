@@ -6,7 +6,8 @@ import tensorflow as tf
 from tensorflow.keras.models import load_model
 import requests
 
-model_url =r"https://github.com/Jesly-Joji/Violence-Detection/blob/main/violence_detection_mobilenet_lstm_model.h5"
+model_url = "https://raw.githubusercontent.com/Jesly-Joji/Violence-Detection/main/violence_detection_mobilenet_lstm_model.h5"
+
 
 response = requests.get(model_url)
 with open("model.h5", "wb") as f:
