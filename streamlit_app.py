@@ -6,15 +6,10 @@ import tensorflow as tf
 from tensorflow.keras.models import load_model
 import requests
 
-model_url = "https://raw.githubusercontent.com/Jesly-Joji/Violence-Detection/main/violence_detection_mobilenet_lstm_model.h5"
-
-
-response = requests.get(model_url)
-with open("model.h5", "wb") as f:
-    f.write(response.content)
+model_url = r"https://raw.githubusercontent.com/Jesly-Joji/Violence-Detection/main/violence_detection_mobilenet_lstm_model.h5"
 
 # Load the trained model
-model = load_model("model.h5")
+model = load_model(model_url)
 
 # Hyperparameters
 IMG_HEIGHT, IMG_WIDTH = 129, 129
