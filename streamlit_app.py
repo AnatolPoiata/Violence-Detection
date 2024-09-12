@@ -27,9 +27,9 @@ def process_and_annotate_video(video_path, output_path='output_video.mp4'):
     
     if not cap.isOpened():
         return []
-    
-    fourcc = cv2.VideoWriter_fourcc(*'H264')
 
+    # Set up video writer with H264 encoding
+    fourcc = cv2.VideoWriter_fourcc(*'H264')  # Codec for H264 encoding
     out = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))
 
     frames = []
