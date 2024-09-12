@@ -24,7 +24,7 @@ SEQUENCE_LENGTH = 10
 # Function to process and annotate video
 def process_and_annotate_video(video_path, output_path='output_video.mp4'):
     cap = cv2.VideoCapture(video_path)
-    
+
     if not cap.isOpened():
         return []
 
@@ -35,17 +35,17 @@ def process_and_annotate_video(video_path, output_path='output_video.mp4'):
     frames = []
     predictions = []
     total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-    
+
     progress_bar = st.progress(0)
-    
+
     while True:
         ret, frame = cap.read()
         if not ret:
             break
-        
+
         resized_frame = cv2.resize(frame, (IMG_HEIGHT, IMG_WIDTH))
         frames.append(resized_frame)
-        
+
         if len(frames) == SEQUENCE_LENGTH:
             sequence = np.expand_dims(np.array(frames), axis=0) / 255.0
             pred = model.predict(sequence)[0][0]
@@ -55,9 +55,9 @@ def process_and_annotate_video(video_path, output_path='output_video.mp4'):
             cv2.putText(frame, label, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2, cv2.LINE_AA)
             out.write(frame)
             frames.pop(0)
-        
+
         progress_bar.progress(min(cap.get(cv2.CAP_PROP_POS_FRAMES) / total_frames, 1.0))
-    
+
     cap.release()
     out.release()
 
