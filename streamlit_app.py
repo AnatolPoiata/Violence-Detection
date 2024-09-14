@@ -4,6 +4,7 @@ import tensorflow as tf
 from tensorflow.keras.models import load_model
 import streamlit as st
 import requests
+import subprocess
 
 # Model URL
 model_url = "https://raw.githubusercontent.com/Jesly-Joji/Violence-Detection/main/violence_detection_mobilenet_lstm_model.h5"
@@ -25,6 +26,7 @@ def process_and_annotate_video(video_path, output_path='output_video.mp4'):
     cap = cv2.VideoCapture(video_path)
     
     if not cap.isOpened():
+        st.error("Failed to open video file.")
         return []
     
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
@@ -79,8 +81,15 @@ if uploaded_file:
         st.video(uploaded_file)  # Display the uploaded video
 
         st.write("Output File")
-        ffmpeg -i output_video.mp4 -vcodec libx264 output_video.mp4
-        st.video("output_video.mp4")  # Display the annotated video
+        
+        # Convert video format if needed
+        try:
+            subprocess.run(["ffmpeg", "-i", "output_video.mp4", "-vcodec", "libx264", "output_video_converted.mp4"], check=True)
+        except subprocess.CalledProcessError as e:
+            st.error(f"FFmpeg conversion failed: {e}")
+            return
+        
+        st.video("output_video_converted.mp4")  # Display the annotated video
 
         violent_frames = sum(p > 0.5 for p in predictions)
         non_violent_frames = len(predictions) - violent_frames
