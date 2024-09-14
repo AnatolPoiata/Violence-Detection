@@ -29,7 +29,7 @@ def process_and_annotate_video(video_path, output_path='output_video.mp4'):
         return []
     
  
-    fourcc = cv.VideoWriter_fourcc(*’avc1')
+    fourcc = cv.VideoWriter_fourcc(*'avc1')
     out = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))
     
     frames = []
