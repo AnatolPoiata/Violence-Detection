@@ -25,11 +25,12 @@ def process_and_annotate_video(video_path, output_path='output_video.mp4'):
     cap = cv2.VideoCapture(video_path)
     
     if not cap.isOpened():
+        st.error("Error opening video file.")
         return []
     
     fourcc = cv2.VideoWriter_fourcc('M','J','P','G')
     out = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))
-
+    
     frames = []
     predictions = []
     total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -44,6 +45,7 @@ def process_and_annotate_video(video_path, output_path='output_video.mp4'):
         resized_frame = cv2.resize(frame, (IMG_WIDTH, IMG_HEIGHT))
         frames.append(resized_frame)
         
+        # Process frames only when we have enough to form a sequence
         if len(frames) == SEQUENCE_LENGTH:
             sequence = np.expand_dims(np.array(frames), axis=0) / 255.0
             pred = model.predict(sequence)[0][0]
@@ -52,7 +54,7 @@ def process_and_annotate_video(video_path, output_path='output_video.mp4'):
             color = (0, 0, 255) if pred > 0.5 else (0, 255, 0)
             cv2.putText(frame, label, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2, cv2.LINE_AA)
             out.write(frame)
-            frames.pop(0)
+            frames.pop(0)  # Ensure this only happens if frames is not empty
         
         progress_bar.progress(min(cap.get(cv2.CAP_PROP_POS_FRAMES) / total_frames, 1.0))
     
