@@ -79,7 +79,7 @@ if uploaded_file:
         st.video(uploaded_file)  # Display the uploaded video
 
         st.write("Output File")
-        fmpeg -i output_video.mp4 -vcodec libx264 output_video.mp4
+        ffmpeg -i output_video.mp4 -vcodec libx264 output_video.mp4
         st.video("output_video.mp4")  # Display the annotated video
 
         violent_frames = sum(p > 0.5 for p in predictions)
