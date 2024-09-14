@@ -2,4 +2,4 @@
 Used the hybrid CNN-LSTM Architecture for the video classification<br>
 Used MobileNetV2 <br>
 <b>TOOLS:<b> Numpy, Matplotlib, Seaborn, Keras Open CV, Streamlit
-Live Link:https://violence-detection.streamlit.app
+<br>Live Link:https://violence-detection.streamlit.app
