@@ -28,8 +28,7 @@ def process_and_annotate_video(video_path, output_path='output_video.mp4'):
         st.error("Error opening video file.")
         return []
     
- 
-    fourcc = cv.VideoWriter_fourcc(*'avc1')
+    fourcc = cv2.VideoWriter_fourcc(*'avc1')
     out = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))
     
     frames = []
@@ -63,6 +62,7 @@ def process_and_annotate_video(video_path, output_path='output_video.mp4'):
     out.release()
 
     return predictions
+
 
 # Streamlit app
 st.title("Violence Detection in Videos")
