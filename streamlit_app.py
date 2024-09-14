@@ -55,7 +55,7 @@ def process_and_annotate_video(video_path, output_path='output_video.mp4'):
             predictions.append(pred)
             
             # Annotate the frame with the prediction
-            label = f"Violent ({pred})" if pred > 0.5 else f"Non-Violent ({pred})"
+            label = "Violent" if pred > 0.5 else "Non-Violent"
             color = (0, 0, 255) if pred > 0.5 else (0, 255, 0)
             cv2.putText(frame, label, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2, cv2.LINE_AA)
             
