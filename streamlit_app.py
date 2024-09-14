@@ -87,7 +87,7 @@ if uploaded_file:
             subprocess.run(["ffmpeg", "-i", "output_video.mp4", "-vcodec", "libx264", "output_video_converted.mp4"], check=True)
         except subprocess.CalledProcessError as e:
             st.error(f"FFmpeg conversion failed: {e}")
-            return
+            st.stop()  # Stop the script execution if FFmpeg conversion fails
         
         st.video("output_video_converted.mp4")  # Display the annotated video
 
