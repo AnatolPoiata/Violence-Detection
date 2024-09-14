@@ -4,7 +4,6 @@ import tensorflow as tf
 from tensorflow.keras.models import load_model
 import streamlit as st
 import requests
-import os
 
 # Model URL
 model_url = "https://raw.githubusercontent.com/Jesly-Joji/Violence-Detection/main/violence_detection_mobilenet_lstm_model.h5"
@@ -28,8 +27,7 @@ def process_and_annotate_video(video_path, output_path='output_video.mp4'):
     if not cap.isOpened():
         return []
     
-    fourcc = cv2.VideoWriter_fourcc(*'avc1')
-
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     out = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))
 
     frames = []
@@ -43,7 +41,7 @@ def process_and_annotate_video(video_path, output_path='output_video.mp4'):
         if not ret:
             break
         
-        resized_frame = cv2.resize(frame, (IMG_HEIGHT, IMG_WIDTH))
+        resized_frame = cv2.resize(frame, (IMG_WIDTH, IMG_HEIGHT))
         frames.append(resized_frame)
         
         if len(frames) == SEQUENCE_LENGTH:
@@ -80,7 +78,7 @@ if uploaded_file:
         st.write("Input File")
         st.video(uploaded_file)  # Display the uploaded video
 
-        st.write("OUTPUT")
+        st.write("Output File")
         st.video("output_video.mp4")  # Display the annotated video
 
         violent_frames = sum(p > 0.5 for p in predictions)
