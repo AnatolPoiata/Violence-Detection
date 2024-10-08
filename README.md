@@ -5,7 +5,7 @@ Used MobileNetV2 <br>
 <br>Live Link:https://violence-detection.streamlit.app
 
 OUTPUT VIDEO <br>
-https://github.com/Jesly-Joji/Violence-Detection/blob/main/Output1.mp4
+
 
 
 
