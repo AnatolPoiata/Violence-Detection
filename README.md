@@ -5,8 +5,5 @@ Used MobileNetV2 <br>
 <br>Live Link:https://violence-detection.streamlit.app
 
 OUTPUT VIDEO <br>
-https://github.com/user-attachments/assets/fbc467bb-4dee-4b08-aa20-60aadceb1d82  <br>
-
-![Video](https://github.com/user-attachments/assets/fbc467bb-4dee-4b08-aa20-60aadceb1d82)
 
 
