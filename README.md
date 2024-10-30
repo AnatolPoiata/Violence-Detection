@@ -4,7 +4,7 @@ Used MobileNetV2 for CNN as it is Computationally efficient<br>
 <b>TOOLS:<b> Numpy, Matplotlib, Seaborn, Keras, Open CV, Streamlit
 <br>Live Link:https://violence-detection.streamlit.app
 
-<b> F1-SCORE: 91.6%
+<b> F1-SCORE: 91.6%<br>
 <b>CONFUSION MATRIX<br>
 ![736c1f16-4e30-4c55-8023-59ce9f2e5c6b](https://github.com/user-attachments/assets/1461854d-135a-454b-b2f4-169425c26a22)
 
